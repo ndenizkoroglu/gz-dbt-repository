@@ -26,7 +26,10 @@ sources:
         description: "Greenweez ürün kataloğu."
         columns:
           - name: products_id
-            description: "Birincil anahtar."
+            description: "Birincil anahtar (her ürün için benzersiz kimlik)."
+            tests:
+              - unique
+              - not_null
           - name: purchase_price
             description: "Ürünün satın alma maliyeti."
 
