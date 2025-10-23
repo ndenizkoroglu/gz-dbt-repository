@@ -1,13 +1,47 @@
 version: 2
+
 sources:
-  - name: raw
-    schema: dbt_dkoroglu      # <-- BigQuery’deki dataset’in buysa böyle kalsın
+  - name: raw                # dbt'de kullanacağın kısa ad
+    database: deniz-challenge1
+    schema: dbt_dkoroglu     # BigQuery'deki gerçek dataset adı
     tables:
+
       - name: sales
         identifier: raw_gz_sales
+        description: "Greenweez satışları; her satır orders_id x pdt_id kombinasyonu."
+        columns:
+          - name: date_date
+            description: "Satın alma tarihi (DATE)."
+          - name: orders_id
+            description: "Ship tablosuna yabancı anahtar."
+          - name: pdt_id
+            description: "Product tablosuna yabancı anahtar."
+          - name: revenue
+            description: "Ürün için ödenen tutar (= quantity * selling_price)."
+          - name: quantity
+            description: "Siparişteki ürün adedi."
+
       - name: product
         identifier: raw_gz_product
+        description: "Greenweez ürün kataloğu."
+        columns:
+          - name: products_id
+            description: "Birincil anahtar."
+          - name: purchase_price
+            description: "Ürünün satın alma maliyeti."
+
       - name: ship
         identifier: raw_gz_ship
+        description: "Greenweez siparişlerinin sevkiyat bilgileri."
+        columns:
+          - name: orders_id
+            description: "Birincil anahtar."
+          - name: shipping_fee
+            description: "Müşterinin ödediği kargo ücreti."
+          - name: log_cost
+            description: "Depoda hazırlık/operasyon maliyeti."
+          - name: ship_cost
+            description: "Taşıyıcıya ödenen kargo maliyeti."
+
 
 
