@@ -5,17 +5,13 @@ sources:
     database: deniz-challenge1
     schema: dbt_dkoroglu
     tables:
+      - name: sales
+        identifier: raw_gz_sales
       - name: product
         identifier: raw_gz_product
-        description: "Greenweez ürün kataloğu."
-        columns:
-          - name: pdt_id          # <= gerçek kolon adı
-            description: "Birincil anahtar (ürün kimliği)."
-            tests:
-              - unique
-              - not_null
-          - name: purchase_price
-            description: "Ürünün satın alma maliyeti."
+      - name: ship
+        identifier: raw_gz_ship
+
 
 
 
