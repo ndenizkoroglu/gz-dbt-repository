@@ -5,12 +5,31 @@ sources:
     database: deniz-challenge1
     schema: dbt_dkoroglu
     tables:
+
       - name: sales
         identifier: raw_gz_sales
-      - name: product
-        identifier: raw_gz_product
-      - name: ship
-        identifier: raw_gz_ship
+        description: "sales of Greenweez / we have one row per product_id found in each orders_id"
+        columns:
+          - name: date_date
+            description: "date of purchase"
+          - name: orders_id
+            description: "foreign key to ship"
+          - name: pdt_id
+            description: "foreign key to product"
+          - name: revenue
+            description: "the amount paid by the customer to purchase the product. revenue = quantity * selling_price"
+          - name: quantity
+            description: "the quantity of products purchased for a given order"
+
+        # 🔒 Bir siparişte aynı ürün bir kez görünsün: (orders_id, pdt_id) birlikte benzersiz
+        tests:
+          - dbt_utils.unique_combination_of_columns:
+              combination_of_columns: ['orders_id', 'pdt_id']
+
+          # (İsteğe bağlı) Tek kolonluk unique testi için güvenli BigQuery ifadesi:
+          # - unique:
+          #     column_name: "CONCAT(CAST(orders_id AS STRING), '-', CAST(pdt_id AS STRING))"
+
 
 
 
