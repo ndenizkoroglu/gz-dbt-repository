@@ -29,8 +29,16 @@ sources:
           # (İsteğe bağlı) Tek kolonluk unique testi için güvenli BigQuery ifadesi:
           # - unique:
           #     column_name: "CONCAT(CAST(orders_id AS STRING), '-', CAST(pdt_id AS STRING))"
-
-
+models:
+  - name: stg_raw__sales
+    columns:
+      - name: orders_id
+        tests: [not_null]
+      - name: products_id
+        tests: [not_null]
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns: ['orders_id', 'products_id']
 
 
 
